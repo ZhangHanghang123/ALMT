@@ -1,0 +1,102 @@
+"""
+存量数据实体
+"""
+from sqlalchemy import Column, String, Integer, Numeric, DateTime
+from sqlalchemy.sql import func
+from almt_app.models.database import Base
+
+
+class CurrentPosition(Base):
+    """存量数据表"""
+    __tablename__ = "almt_current_position"
+
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    uuid = Column(String(36), unique=True, nullable=False, index=True)
+    coa_lvl = Column(String(50), nullable=True)
+    coa_name = Column(String(200), nullable=True)
+    balance = Column(Numeric(20, 2), nullable=True)
+    average = Column(Numeric(20, 2), nullable=True)
+    rate = Column(Numeric(10, 6), nullable=True)
+
+    # 72个月的数据列
+    current1 = Column(Numeric(20, 2), nullable=True)
+    current2 = Column(Numeric(20, 2), nullable=True)
+    current3 = Column(Numeric(20, 2), nullable=True)
+    current4 = Column(Numeric(20, 2), nullable=True)
+    current5 = Column(Numeric(20, 2), nullable=True)
+    current6 = Column(Numeric(20, 2), nullable=True)
+    current7 = Column(Numeric(20, 2), nullable=True)
+    current8 = Column(Numeric(20, 2), nullable=True)
+    current9 = Column(Numeric(20, 2), nullable=True)
+    current10 = Column(Numeric(20, 2), nullable=True)
+    current11 = Column(Numeric(20, 2), nullable=True)
+    current12 = Column(Numeric(20, 2), nullable=True)
+    current13 = Column(Numeric(20, 2), nullable=True)
+    current14 = Column(Numeric(20, 2), nullable=True)
+    current15 = Column(Numeric(20, 2), nullable=True)
+    current16 = Column(Numeric(20, 2), nullable=True)
+    current17 = Column(Numeric(20, 2), nullable=True)
+    current18 = Column(Numeric(20, 2), nullable=True)
+    current19 = Column(Numeric(20, 2), nullable=True)
+    current20 = Column(Numeric(20, 2), nullable=True)
+    current21 = Column(Numeric(20, 2), nullable=True)
+    current22 = Column(Numeric(20, 2), nullable=True)
+    current23 = Column(Numeric(20, 2), nullable=True)
+    current24 = Column(Numeric(20, 2), nullable=True)
+    current25 = Column(Numeric(20, 2), nullable=True)
+    current26 = Column(Numeric(20, 2), nullable=True)
+    current27 = Column(Numeric(20, 2), nullable=True)
+    current28 = Column(Numeric(20, 2), nullable=True)
+    current29 = Column(Numeric(20, 2), nullable=True)
+    current30 = Column(Numeric(20, 2), nullable=True)
+    current31 = Column(Numeric(20, 2), nullable=True)
+    current32 = Column(Numeric(20, 2), nullable=True)
+    current33 = Column(Numeric(20, 2), nullable=True)
+    current34 = Column(Numeric(20, 2), nullable=True)
+    current35 = Column(Numeric(20, 2), nullable=True)
+    current36 = Column(Numeric(20, 2), nullable=True)
+    current37 = Column(Numeric(20, 2), nullable=True)
+    current38 = Column(Numeric(20, 2), nullable=True)
+    current39 = Column(Numeric(20, 2), nullable=True)
+    current40 = Column(Numeric(20, 2), nullable=True)
+    current41 = Column(Numeric(20, 2), nullable=True)
+    current42 = Column(Numeric(20, 2), nullable=True)
+    current43 = Column(Numeric(20, 2), nullable=True)
+    current44 = Column(Numeric(20, 2), nullable=True)
+    current45 = Column(Numeric(20, 2), nullable=True)
+    current46 = Column(Numeric(20, 2), nullable=True)
+    current47 = Column(Numeric(20, 2), nullable=True)
+    current48 = Column(Numeric(20, 2), nullable=True)
+    current49 = Column(Numeric(20, 2), nullable=True)
+    current50 = Column(Numeric(20, 2), nullable=True)
+    current51 = Column(Numeric(20, 2), nullable=True)
+    current52 = Column(Numeric(20, 2), nullable=True)
+    current53 = Column(Numeric(20, 2), nullable=True)
+    current54 = Column(Numeric(20, 2), nullable=True)
+    current55 = Column(Numeric(20, 2), nullable=True)
+    current56 = Column(Numeric(20, 2), nullable=True)
+    current57 = Column(Numeric(20, 2), nullable=True)
+    current58 = Column(Numeric(20, 2), nullable=True)
+    current59 = Column(Numeric(20, 2), nullable=True)
+    current60 = Column(Numeric(20, 2), nullable=True)
+    current61 = Column(Numeric(20, 2), nullable=True)
+    current62 = Column(Numeric(20, 2), nullable=True)
+    current63 = Column(Numeric(20, 2), nullable=True)
+    current64 = Column(Numeric(20, 2), nullable=True)
+    current65 = Column(Numeric(20, 2), nullable=True)
+    current66 = Column(Numeric(20, 2), nullable=True)
+    current67 = Column(Numeric(20, 2), nullable=True)
+    current68 = Column(Numeric(20, 2), nullable=True)
+    current69 = Column(Numeric(20, 2), nullable=True)
+    current70 = Column(Numeric(20, 2), nullable=True)
+    current71 = Column(Numeric(20, 2), nullable=True)
+    current72 = Column(Numeric(20, 2), nullable=True)
+
+    averageBalance = Column(Numeric(20, 2), nullable=True)
+    averageIncome = Column(Numeric(20, 2), nullable=True)
+
+    created_at = Column(DateTime, server_default=func.now())
+    updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())
+
+    def __repr__(self):
+        return f"<CurrentPosition(coa_lvl={self.coa_lvl}, coa_name={self.coa_name})>"

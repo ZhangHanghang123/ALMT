@@ -1,0 +1,64 @@
+# ============================================================
+# ALMT 经营计划模拟系统 - Git 忽略规则
+# 参照 IALMD .gitignore 标准
+# ============================================================
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+venv/
+.venv/
+
+# Node / Frontend
+node_modules/
+dist/
+build/
+.vite/
+*.local
+.npm/
+.eslintcache
+
+# 环境配置 & 敏感信息
+.env
+.env.local
+.env.*.local
+*.pem
+secrets/
+
+# 日志
+logs/
+*.log
+logs_verify.log
+/tmp/
+
+# 数据 & 临时
+data/
+tmp_redis/
+tmp/
+*.dat
+*.bak
+
+# IDE / 编辑器
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# 测试缓存
+.coverage
+htmlcov/
+.tox/
+
+# 数据库
+*.db
+*.sqlite
+*.sqlite3
