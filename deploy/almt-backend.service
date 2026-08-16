@@ -1,0 +1,34 @@
+[Unit]
+Description=ALMT Backend API Server (FastAPI + Uvicorn) - 经营计划模拟系统
+After=network.target mysql.service redis-server.service
+Wants=mysql.service redis-server.service
+
+[Service]
+Type=exec
+User=almd
+Group=almd
+WorkingDirectory=/opt/almt/almt-backend
+Environment="PATH=/opt/almt/almt-backend/venv/bin:/usr/local/bin:/usr/bin"
+EnvironmentFile=/opt/almt/almt-backend/.env
+
+# 使用 uvicorn 启动（单进程）
+ExecStart=/opt/almt/almt-backend/venv/bin/uvicorn almt_app.main:app \
+    --host 127.0.0.1 \
+    --port 8001 \
+    --workers 2 \
+    --loop uvloop \
+    --http httptools \
+    --no-access-log
+
+Restart=always
+RestartSec=5
+
+# 日志
+StandardOutput=append:/opt/almt/logs/backend/app.log
+StandardError=append:/opt/almt/logs/backend/error.log
+
+# 资源限制
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target

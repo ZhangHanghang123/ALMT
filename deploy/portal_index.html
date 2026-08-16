@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>金融经营智能分析平台</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", "PingFang SC", sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0f2027 0%, #203a43 40%, #2c5364 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+  }
+  .container { width: 100%; max-width: 960px; }
+  .header { text-align: center; margin-bottom: 48px; }
+  .header .logo { font-size: 34px; font-weight: 800; color: #fff; letter-spacing: 1px; }
+  .header .subtitle { font-size: 15px; color: rgba(255,255,255,0.65); margin-top: 10px; letter-spacing: 2px; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px; }
+  .card {
+    display: block;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 16px;
+    padding: 36px 32px;
+    text-decoration: none;
+    color: #fff;
+    transition: all 0.25s ease;
+    backdrop-filter: blur(8px);
+    position: relative;
+    overflow: hidden;
+  }
+  .card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(255,255,255,0.35);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+  }
+  .card.bank::before { background: linear-gradient(90deg, #1677ff, #52c41a); }
+  .card.insurance::before { background: linear-gradient(90deg, #fa8c16, #ff4d4f); }
+  .card.almt::before { background: linear-gradient(90deg, #722ed1, #eb2f96); }
+  .card .icon {
+    width: 56px; height: 56px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 30px; margin-bottom: 20px;
+  }
+  .card.bank .icon { background: rgba(22,119,255,0.2); }
+  .card.insurance .icon { background: rgba(250,140,22,0.2); }
+  .card.almt .icon { background: rgba(114,46,209,0.2); }
+  .card h2 { font-size: 22px; font-weight: 700; margin-bottom: 10px; }
+  .card .en { font-size: 12px; color: rgba(255,255,255,0.5); letter-spacing: 1px; margin-bottom: 14px; text-transform: uppercase; }
+  .card p { font-size: 13px; color: rgba(255,255,255,0.75); line-height: 1.7; margin-bottom: 18px; }
+  .card .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+  .card .tag {
+    font-size: 11px; padding: 4px 10px; border-radius: 20px;
+    background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.85);
+  }
+  .card .enter {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 14px; font-weight: 600; color: #fff;
+  }
+  .card .enter .arrow { transition: transform 0.2s; }
+  .card:hover .enter .arrow { transform: translateX(4px); }
+  .footer { text-align: center; margin-top: 48px; color: rgba(255,255,255,0.4); font-size: 12px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="logo">金融经营智能分析平台</div>
+    <div class="subtitle">AI 驱动的经营分析 · 数据驱动的智能决策</div>
+  </div>
+
+  <div class="cards">
+    <a class="card bank" href="/almd/">
+      <div class="icon">🏦</div>
+      <h2>银行经营智能分析平台</h2>
+      <div class="en">ALMD · Bank Management Analysis</div>
+      <p>覆盖 47 家银行、10 类公开报告，AI 驱动的银行业经营分析智能对话平台，支持同业对比、流动性压力测试、智能问答。</p>
+      <div class="tags">
+        <span class="tag">同业对比</span>
+        <span class="tag">流动性压力测试</span>
+        <span class="tag">智能对话</span>
+        <span class="tag">指标库</span>
+      </div>
+      <span class="enter">进入系统 <span class="arrow">→</span></span>
+    </a>
+
+    <a class="card insurance" href="/ialmd/">
+      <div class="icon">🛡️</div>
+      <h2>保险经营智能分析平台</h2>
+      <div class="en">IALMD · Insurance Management Analysis</div>
+      <p>覆盖 30 家保险公司、偿付能力监管为核心，AI 驱动的保险业经营分析平台，支持偿付能力分析、同业对标、智能问答。</p>
+      <div class="tags">
+        <span class="tag">偿付能力分析</span>
+        <span class="tag">综合成本率</span>
+        <span class="tag">新业务价值</span>
+        <span class="tag">智能对话</span>
+      </div>
+      <span class="enter">进入系统 <span class="arrow">→</span></span>
+    </a>
+
+    <a class="card almt" href="/almt/">
+      <div class="icon">📊</div>
+      <h2>经营计划模拟系统</h2>
+      <div class="en">ALMT · Asset Liability Management Tool</div>
+      <p>面向银行经营计划的模拟分析平台，由原 Excel/VBA 系统重构为 Web 架构，4 个计算引擎（业务分摊/定价策略/现金流/指标）覆盖 774 个账户册完整计算流程。</p>
+      <div class="tags">
+        <span class="tag">业务分摊</span>
+        <span class="tag">定价策略</span>
+        <span class="tag">现金流计量</span>
+        <span class="tag">指标看板</span>
+      </div>
+      <span class="enter">进入系统 <span class="arrow">→</span></span>
+    </a>
+  </div>
+
+  <div class="footer">© 2026 金融经营智能分析平台 · ALMD & IALMD & ALMT</div>
+
+  <div class="footer">© 2026 金融经营智能分析平台 · ALMD & IALMD</div>
+</div>
+</body>
+</html>

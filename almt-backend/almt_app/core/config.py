@@ -14,6 +14,9 @@ class Settings(BaseSettings):
     APP_VERSION: str = "1.0.0"
     DEBUG: bool = True
 
+    # 数据库连接 URL（支持环境变量直接配置，比 MYSQL_* 字段更灵活）
+    DATABASE_URL_OVERRIDE: Optional[str] = None
+
     # 服务器配置
     HOST: str = "0.0.0.0"
     PORT: int = 8001
@@ -27,8 +30,10 @@ class Settings(BaseSettings):
 
     @property
     def DATABASE_URL(self) -> str:
-        """数据库连接URL"""
-        return f"mysql+pymysql://{self.MYSQL_USER}:{self.MYSQL_PASSWORD}@{self.MYSQL_HOST}:{self.MYSQL_PORT}/{self.MYSQL_DATABASE}"
+        """数据库连接URL（优先用显式 DATABASE_URL_OVERRIDE，否则从 MYSQL_* 字段构建）"""
+        if self.DATABASE_URL_OVERRIDE:
+            return self.DATABASE_URL_OVERRIDE
+        return f"mysql+pymysql://{self.MYSQL_USER}:{self.MYSQL_PASSWORD}@{self.MYSQL_HOST}:{self.MYSQL_PORT}/{self.MYSQL_DATABASE}?charset=utf8mb4"
 
     # Redis配置
     REDIS_HOST: str = "localhost"

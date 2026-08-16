@@ -109,7 +109,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
 
   const handleLogout = () => {
     localStorage.removeItem('access_token')
-    window.location.href = '/login'
+    window.location.href = '/almt/login'
   }
 
   return (
@@ -161,7 +161,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/almt">
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />

@@ -1,8 +1,31 @@
 import pymysql
 import hashlib
+import os
+from urllib.parse import urlparse, unquote
+
+# 从 DATABASE_URL 或环境变量解析 MySQL 配置（支持生产部署）
+db_url = os.environ.get('DATABASE_URL', '')
+if db_url and db_url.startswith('mysql'):
+    # 解析 mysql+pymysql://user:pass@host:port/db?charset=...
+    parsed = urlparse(db_url.replace('mysql+pymysql://', 'mysql://'))
+    DB_CFG = {
+        'host': parsed.hostname or 'localhost',
+        'port': parsed.port or 3306,
+        'user': unquote(parsed.username or 'almt'),
+        'password': unquote(parsed.password or 'almt'),
+        'database': (parsed.path or '/almt_db').lstrip('/').split('?')[0],
+    }
+else:
+    DB_CFG = {
+        'host': os.environ.get('MYSQL_HOST', 'localhost'),
+        'port': int(os.environ.get('MYSQL_PORT', 3306)),
+        'user': os.environ.get('MYSQL_USER', 'almt'),
+        'password': os.environ.get('MYSQL_PASSWORD', 'almt'),
+        'database': os.environ.get('MYSQL_DATABASE', 'almt_db'),
+    }
 
 # 连接MySQL
-conn = pymysql.connect(host='localhost', user='almt', password='almt', database='almt_db', port=3306)
+conn = pymysql.connect(**DB_CFG)
 cursor = conn.cursor()
 
 # 创建表SQL
