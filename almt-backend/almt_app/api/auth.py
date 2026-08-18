@@ -2,9 +2,9 @@
 认证API
 """
 from fastapi import APIRouter, Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from datetime import timedelta
+from pydantic import BaseModel
 import hashlib
 
 from almt_app.core.database import get_db
@@ -15,6 +15,11 @@ from almt_app.core.security import (
 from almt_app.core.config import settings
 
 router = APIRouter(prefix="/api/auth", tags=["认证"])
+
+
+class LoginRequest(BaseModel):
+    username: str
+    password: str
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
@@ -31,15 +36,10 @@ MOCK_USER = {
 
 
 @router.post("/login")
-def login(
-    form_data: OAuth2PasswordRequestForm = Depends(),
-    db: Session = Depends(get_db)
-):
+def login(req: LoginRequest, db: Session = Depends(get_db)):
     """用户登录"""
-    # 简化版本：使用模拟用户验证
-    # 生产环境应从数据库查询用户
-    if form_data.username != MOCK_USER["username"] or \
-       not verify_password(form_data.password, MOCK_USER["password_hash"]):
+    if req.username != MOCK_USER["username"] or \
+       not verify_password(req.password, MOCK_USER["password_hash"]):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="用户名或密码错误",
@@ -48,14 +48,14 @@ def login(
 
     # 创建访问令牌
     access_token = create_access_token(
-        data={"sub": form_data.username},
+        data={"sub": req.username},
         expires_delta=timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     )
 
     return {
         "access_token": access_token,
         "token_type": "bearer",
-        "username": form_data.username
+        "username": req.username
     }
 
 
