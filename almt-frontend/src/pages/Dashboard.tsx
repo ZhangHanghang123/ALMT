@@ -7,16 +7,36 @@ import {
   CalculatorOutlined,
   BarChartOutlined
 } from '@ant-design/icons'
+import apiClient from '../api/client'
 
 const Dashboard = () => {
   const [stats, setStats] = useState({
     coaCount: 0,
     paramCount: 0,
-    taskCount: 0
+    taskCount: 0,
+    indicatorCount: 0
   })
 
   useEffect(() => {
     // 加载统计数据
+    const fetchStats = async () => {
+      try {
+        const [coaRes, rateRes, taskRes] = await Promise.all([
+          apiClient.get('/coa'),
+          apiClient.get('/param/rate-scenario'),
+          apiClient.get('/calculate/tasks')
+        ])
+        setStats({
+          coaCount: Array.isArray(coaRes.data) ? coaRes.data.length : 0,
+          paramCount: Array.isArray(rateRes.data) ? rateRes.data.length : 0,
+          taskCount: Array.isArray(taskRes.data) ? taskRes.data.length : 0,
+          indicatorCount: 0
+        })
+      } catch (e) {
+        console.error('加载统计数据失败', e)
+      }
+    }
+    fetchStats()
   }, [])
 
   return (
