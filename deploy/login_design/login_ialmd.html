@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<title>IALMD 保险经营智能分析平台 - 登录</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+    min-height: 100vh;
+    background:
+      radial-gradient(circle at 0% 100%, #fdebe6 0%, transparent 50%),
+      radial-gradient(circle at 100% 0%, #f5d8cf 0%, transparent 50%),
+      linear-gradient(135deg, #fdf3ef 0%, #f8dccf 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+  /* 朱砂底纹 - 篆刻质感 */
+  body::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 50%, rgba(180, 30, 30, 0.04) 0%, transparent 40%),
+      radial-gradient(circle at 80% 30%, rgba(180, 30, 30, 0.06) 0%, transparent 40%);
+    pointer-events: none;
+  }
+  .card {
+    background: #fffbf8;
+    width: 460px;
+    padding: 48px 56px 40px;
+    border-radius: 6px;
+    box-shadow:
+      0 0 0 1px rgba(176, 42, 42, 0.2),
+      0 0 0 4px rgba(176, 42, 42, 0.05),
+      0 24px 60px rgba(120, 30, 30, 0.18);
+    position: relative;
+    z-index: 1;
+  }
+  .card::before {
+    content: "";
+    position: absolute;
+    top: 14px; left: 14px; right: 14px; bottom: 14px;
+    border: 1px solid rgba(176, 42, 42, 0.3);
+    border-radius: 4px;
+    pointer-events: none;
+  }
+  .seal-frame { text-align: center; margin-bottom: 28px; }
+  .seal-frame img {
+    width: 96px;
+    height: 96px;
+    display: block;
+    margin: 0 auto 16px;
+    filter: drop-shadow(0 4px 12px rgba(176, 42, 42, 0.3));
+  }
+  .seal-frame h1 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #7a1c1c;
+    letter-spacing: 4px;
+    margin-bottom: 4px;
+  }
+  .seal-frame .subtitle {
+    font-size: 11px;
+    color: #b02a2a;
+    letter-spacing: 6px;
+    opacity: 0.7;
+  }
+  .divider {
+    display: flex;
+    align-items: center;
+    margin: 24px 0;
+    color: #b02a2a;
+    font-size: 12px;
+    letter-spacing: 2px;
+  }
+  .divider::before, .divider::after {
+    content: "❖";
+    color: #d4a3a3;
+  }
+  .divider::before { margin-right: 12px; }
+  .divider::after { margin-left: 12px; }
+  .divider-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #d4a3a3, transparent);
+  }
+  .form-item { margin-bottom: 18px; }
+  .label {
+    display: block;
+    font-size: 12px;
+    color: #7a1c1c;
+    margin-bottom: 6px;
+    letter-spacing: 2px;
+  }
+  .input-wrap { position: relative; }
+  .input-wrap input {
+    width: 100%;
+    padding: 12px 14px 12px 42px;
+    border: 1px solid #e6c5c0;
+    background: #fff5f1;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #4a1010;
+    transition: all 0.2s;
+  }
+  .input-wrap input:focus {
+    outline: none;
+    border-color: #b02a2a;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(176, 42, 42, 0.12);
+  }
+  .input-wrap .icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #b02a2a;
+    font-size: 16px;
+  }
+  .btn {
+    width: 100%;
+    padding: 13px;
+    margin-top: 8px;
+    background: linear-gradient(135deg, #b02a2a 0%, #7a1c1c 100%);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 15px;
+    letter-spacing: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(176, 42, 42, 0.35);
+    transition: all 0.2s;
+  }
+  .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(176, 42, 42, 0.5);
+  }
+  .hint {
+    text-align: center;
+    margin-top: 18px;
+    font-size: 12px;
+    color: #b02a2a;
+    opacity: 0.65;
+    letter-spacing: 1px;
+  }
+  .seal-mark {
+    position: absolute;
+    top: -16px;
+    right: 30px;
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, #b02a2a, #7a1c1c);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    letter-spacing: 1px;
+    border-radius: 4px;
+    transform: rotate(-8deg);
+    box-shadow: 0 4px 12px rgba(176, 42, 42, 0.4);
+    font-weight: 600;
+  }
+  .seal-mark::after {
+    content: "";
+    position: absolute;
+    inset: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 2px;
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="seal-mark">IALMD</div>
+    <div class="seal-frame">
+      <img src="/design/ialmd_icon.png" alt="IALMD Seal" />
+      <h1>保险经营智能分析</h1>
+      <div class="subtitle">INSURANCE INTELLIGENCE ANALYSIS</div>
+    </div>
+    <div class="divider">
+      <span class="divider-line"></span>
+      &nbsp;&nbsp;账 户 登 录&nbsp;&nbsp;
+      <span class="divider-line"></span>
+    </div>
+    <div class="form-item">
+      <label class="label">用户名</label>
+      <div class="input-wrap">
+        <span class="icon">⌘</span>
+        <input type="text" placeholder="请输入用户名" value="admin" />
+      </div>
+    </div>
+    <div class="form-item">
+      <label class="label">密码</label>
+      <div class="input-wrap">
+        <span class="icon">⚷</span>
+        <input type="password" placeholder="请输入密码" value="admin123" />
+      </div>
+    </div>
+    <button class="btn" onclick="doLogin()">登 录</button>
+    <div class="hint">默认账号: admin / admin123</div>
+    <div id="msg" style="text-align:center;margin-top:12px;color:#b02a2a;font-size:12px;min-height:16px"></div>
+  </div>
+
+<script>
+async function doLogin() {
+  const username = document.querySelector('input[placeholder*="用户"]').value;
+  const password = document.querySelector('input[type="password"]').value;
+  const msgEl = document.getElementById('msg');
+  const btn = document.querySelector('.btn');
+  if (!username || !password) { msgEl.textContent = '请输入用户名和密码'; return; }
+  btn.disabled = true; btn.textContent = '登录中...'; msgEl.textContent = '';
+  try {
+    const resp = await fetch('/ialmd/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    });
+    const data = await resp.json();
+    const token = data.data?.access_token || data.access_token;
+    if (resp.ok && token) {
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(data.data?.user || {}));
+      msgEl.style.color = '#4c8264'; msgEl.textContent = '登录成功，正在跳转...';
+      setTimeout(() => { window.location.href = '/ialmd/'; }, 600);
+    } else {
+      msgEl.textContent = data.detail || data.message || '登录失败';
+      btn.disabled = false; btn.textContent = '登 录';
+    }
+  } catch (e) {
+    msgEl.textContent = '网络错误: ' + e.message;
+    btn.disabled = false; btn.textContent = '登 录';
+  }
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+</script>
+</body>
+</html>

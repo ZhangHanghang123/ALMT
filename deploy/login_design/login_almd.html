@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<title>ALMD 银行经营智能分析平台 - 登录</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+    min-height: 100vh;
+    background:
+      radial-gradient(circle at 0% 0%, #fef7e6 0%, transparent 50%),
+      radial-gradient(circle at 100% 100%, #f4ecdf 0%, transparent 50%),
+      linear-gradient(135deg, #faf5ea 0%, #f0e6d2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+  /* 古铜色底纹 */
+  body::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(45deg, transparent 0 40px, rgba(184, 134, 51, 0.04) 40px 41px),
+      repeating-linear-gradient(-45deg, transparent 0 40px, rgba(184, 134, 51, 0.04) 40px 41px);
+    pointer-events: none;
+  }
+  .card {
+    background: #fff;
+    width: 460px;
+    padding: 48px 56px 40px;
+    border-radius: 4px;
+    box-shadow:
+      0 1px 0 rgba(184, 134, 51, 0.4) inset,
+      0 0 0 1px rgba(184, 134, 51, 0.2),
+      0 20px 60px rgba(112, 80, 30, 0.15);
+    position: relative;
+    z-index: 1;
+  }
+  .card::before {
+    content: "";
+    position: absolute;
+    top: 8px; left: 8px; right: 8px; bottom: 8px;
+    border: 1px solid rgba(184, 134, 51, 0.35);
+    border-radius: 2px;
+    pointer-events: none;
+  }
+  .seal-frame {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+  .seal-frame img {
+    width: 96px;
+    height: 96px;
+    display: block;
+    margin: 0 auto 16px;
+    filter: drop-shadow(0 4px 12px rgba(184, 134, 51, 0.3));
+  }
+  .seal-frame h1 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #5c4019;
+    letter-spacing: 4px;
+    margin-bottom: 4px;
+  }
+  .seal-frame .subtitle {
+    font-size: 11px;
+    color: #a8843e;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+  }
+  .divider {
+    display: flex;
+    align-items: center;
+    margin: 24px 0;
+    color: #c4a973;
+    font-size: 12px;
+    letter-spacing: 2px;
+  }
+  .divider::before, .divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #c4a973, transparent);
+  }
+  .divider::before { margin-right: 12px; }
+  .divider::after { margin-left: 12px; }
+  .form-item { margin-bottom: 18px; }
+  .label {
+    display: block;
+    font-size: 12px;
+    color: #6b4e1f;
+    margin-bottom: 6px;
+    letter-spacing: 2px;
+  }
+  .input-wrap {
+    position: relative;
+  }
+  .input-wrap input {
+    width: 100%;
+    padding: 12px 14px 12px 42px;
+    border: 1px solid #d8c79a;
+    background: #fdf8ed;
+    border-radius: 2px;
+    font-size: 14px;
+    color: #3d2c10;
+    transition: all 0.2s;
+  }
+  .input-wrap input:focus {
+    outline: none;
+    border-color: #b88633;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(184, 134, 51, 0.1);
+  }
+  .input-wrap .icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #b88633;
+    font-size: 16px;
+  }
+  .btn {
+    width: 100%;
+    padding: 13px;
+    margin-top: 8px;
+    background: linear-gradient(135deg, #b88633 0%, #8c6620 100%);
+    color: #fff;
+    border: none;
+    border-radius: 2px;
+    font-size: 15px;
+    letter-spacing: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(184, 134, 51, 0.3);
+    transition: all 0.2s;
+  }
+  .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(184, 134, 51, 0.45);
+  }
+  .hint {
+    text-align: center;
+    margin-top: 18px;
+    font-size: 12px;
+    color: #a8843e;
+    letter-spacing: 1px;
+  }
+  .seal-mark {
+    position: absolute;
+    top: -16px;
+    right: 30px;
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, #b88633 0%, #8c6620 100%);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    letter-spacing: 1px;
+    border-radius: 2px;
+    transform: rotate(-8deg);
+    box-shadow: 0 4px 12px rgba(184, 134, 51, 0.4);
+    font-weight: 600;
+    z-index: 2;
+  }
+  .seal-mark::after {
+    content: "";
+    position: absolute;
+    inset: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 1px;
+  }
+  .corner {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #b88633;
+  }
+  .corner.tl { top: 20px; left: 20px; border-right: none; border-bottom: none; }
+  .corner.tr { top: 20px; right: 20px; border-left: none; border-bottom: none; }
+  .corner.bl { bottom: 20px; left: 20px; border-right: none; border-top: none; }
+  .corner.br { bottom: 20px; right: 20px; border-left: none; border-top: none; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <span class="corner tl"></span><span class="corner tr"></span>
+    <span class="corner bl"></span><span class="corner br"></span>
+    <div class="seal-frame">
+      <img src="/design/almd_icon.png" alt="ALMD Seal" />
+      <h1>银行经营智能分析</h1>
+      <div class="subtitle">BANK INTELLIGENCE ANALYSIS</div>
+    </div>
+    <div class="divider">账 户 登 录</div>
+    <div class="form-item">
+      <label class="label">用户名</label>
+      <div class="input-wrap">
+        <span class="icon">⌘</span>
+        <input type="text" placeholder="请输入用户名" value="demo" />
+      </div>
+    </div>
+    <div class="form-item">
+      <label class="label">密码</label>
+      <div class="input-wrap">
+        <span class="icon">⚷</span>
+        <input type="password" placeholder="请输入密码" value="demo123" />
+      </div>
+    </div>
+    <button class="btn" onclick="doLogin()">登 录</button>
+    <div class="hint">默认账号: demo / demo123</div>
+    <div id="msg" style="text-align:center;margin-top:12px;color:#b02a2a;font-size:12px;min-height:16px"></div>
+    <div class="seal-mark">ALMD</div>
+  </div>
+
+<script>
+async function doLogin() {
+  const username = document.querySelector('input[placeholder*="用户"]').value;
+  const password = document.querySelector('input[type="password"]').value;
+  const msgEl = document.getElementById('msg');
+  const btn = document.querySelector('.btn');
+  if (!username || !password) { msgEl.textContent = '请输入用户名和密码'; return; }
+  btn.disabled = true; btn.textContent = '登录中...'; msgEl.textContent = '';
+  try {
+    const resp = await fetch('/almd/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    });
+    const data = await resp.json();
+    const token = data.data?.access_token || data.access_token;
+    if (resp.ok && token) {
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(data.data?.user || {}));
+      msgEl.style.color = '#4c8264'; msgEl.textContent = '登录成功，正在跳转...';
+      setTimeout(() => { window.location.href = '/almd/'; }, 600);
+    } else {
+      msgEl.textContent = data.detail || data.message || '登录失败';
+      btn.disabled = false; btn.textContent = '登 录';
+    }
+  } catch (e) {
+    msgEl.textContent = '网络错误: ' + e.message;
+    btn.disabled = false; btn.textContent = '登 录';
+  }
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+</script>
+</body>
+</html>

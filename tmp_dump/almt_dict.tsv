@@ -1,0 +1,3 @@
+id	dict_id	dict_name	dict_type	description	created_at
+1	NUM	分子项目字典	NUMERATOR	报表口径分子项目字典	2026-08-14 15:44:08
+2	DEN	分母项目字典	DENOMINATOR	报表口径分母项目字典	2026-08-14 15:44:08

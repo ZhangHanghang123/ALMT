@@ -25,6 +25,7 @@ const ParamPage = ({ defaultTab = '1' }: { defaultTab?: '1' | '2' | '3' | '4' })
   const [ftpTree, setFtpTree] = useState<TreeNode[]>([])
   const [loading, setLoading] = useState(false)
   const [activeTab, setActiveTab] = useState<'1' | '2' | '3' | '4'>(defaultTab)
+  const [curveOptions, setCurveOptions] = useState<{value: string, label: string}[]>([])
 
   // 通用展开状态
   const [riskExpanded, setRiskExpanded] = useState<React.Key[]>([])
@@ -122,6 +123,20 @@ const ParamPage = ({ defaultTab = '1' }: { defaultTab?: '1' | '2' | '3' | '4' })
     else if (activeTab === '3') fetchFtpTree()
     else if (activeTab === '4') fetchPlanTree()
   }, [activeTab])
+
+  // 加载曲线定义选项（用于利率情景的曲线选择）
+  useEffect(() => {
+    const fetchCurveOptions = async () => {
+      try {
+        const res = await apiClient.get('/curve/definitions')
+        const data = Array.isArray(res.data) ? res.data : []
+        setCurveOptions(data.map((c: any) => ({ value: c.curve_name, label: c.curve_name })))
+      } catch (e) {
+        console.error('加载曲线选项失败', e)
+      }
+    }
+    fetchCurveOptions()
+  }, [])
 
   const handleAdd = (type: 'rate' | 'risk' | 'plan' | 'ftp') => {
     setModalType(type)
@@ -630,10 +645,22 @@ const ParamPage = ({ defaultTab = '1' }: { defaultTab?: '1' | '2' | '3' | '4' })
             <InputNumber style={{ width: '100%' }} min={1} />
           </Form.Item>
           <Form.Item name="curve_name" label="曲线名称" rules={[{ required: true }]}>
-            <Input />
+            <Select
+              placeholder="选择曲线"
+              options={curveOptions}
+              showSearch
+              allowClear
+              onChange={(value, option: any) => {
+                // 自动填充曲线ID
+                const selected = curveOptions.find(o => o.value === value)
+                if (selected) {
+                  form.setFieldsValue({ curve_id: selected.value })
+                }
+              }}
+            />
           </Form.Item>
           <Form.Item name="curve_id" label="曲线ID">
-            <Input />
+            <Input placeholder="自动填充" />
           </Form.Item>
           <Form.Item name="current_curve_value" label="当前值" rules={[{ required: true }]}>
             <InputNumber style={{ width: '100%' }} step={0.0001} placeholder="小数，如0.0325" />

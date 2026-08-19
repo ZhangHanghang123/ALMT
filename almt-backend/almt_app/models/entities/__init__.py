@@ -9,6 +9,8 @@ from almt_app.models.entities.param_risk_weight import ParamRiskWeight
 from almt_app.models.entities.param_business_plan import ParamBusinessPlan
 from almt_app.models.entities.param_cashflow_schedule import ParamCashflowSchedule
 from almt_app.models.entities.calculate_task import CalculateTask
+from almt_app.models.entities.curve_definition import CurveDefinition
+from almt_app.models.entities.curve_point import CurvePoint
 
 __all__ = [
     "CoaInfo",
@@ -18,5 +20,7 @@ __all__ = [
     "ParamRiskWeight",
     "ParamBusinessPlan",
     "ParamCashflowSchedule",
-    "CalculateTask"
+    "CalculateTask",
+    "CurveDefinition",
+    "CurvePoint"
 ]

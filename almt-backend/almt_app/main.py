@@ -7,7 +7,7 @@ import logging
 
 from almt_app.core.config import settings
 from almt_app.models.database import engine, Base
-from almt_app.api import auth, coa, param, calculate, position, result, basic_param, indicator, result_views
+from almt_app.api import auth, coa, param, calculate, position, result, basic_param, indicator, result_views, curve
 
 # 配置日志
 logging.basicConfig(
@@ -72,6 +72,7 @@ app.include_router(result.router)
 app.include_router(basic_param.router)
 app.include_router(indicator.router)
 app.include_router(result_views.router)
+app.include_router(curve.router)
 
 
 # 根路径

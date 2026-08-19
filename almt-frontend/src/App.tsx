@@ -44,6 +44,7 @@ import ParamBusinessPlan from './pages/ParamBusinessPlan'
 import ParamCustomStrategy from './pages/ParamCustomStrategy'
 import IndicatorFullBank from './pages/IndicatorFullBank'
 import IndicatorBizLine from './pages/IndicatorBizLine'
+import Curve from './pages/Curve'
 
 const { Header, Sider, Content } = Layout
 
@@ -88,6 +89,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
         { key: '/indicator/biz-line', icon: <FundOutlined />, label: '条线指标' }
       ]
     },
+    { key: '/curve', icon: <LineChartOutlined />, label: '曲线管理' },
     {
       key: 'sub-result',
       icon: <BarChartOutlined />,
@@ -182,6 +184,7 @@ function App() {
         {/* 指标查询：拆分 2 个独立路由 */}
         <Route path="/indicator/full-bank" element={<ProtectedRoute><IndicatorFullBank /></ProtectedRoute>} />
         <Route path="/indicator/biz-line" element={<ProtectedRoute><IndicatorBizLine /></ProtectedRoute>} />
+        <Route path="/curve" element={<ProtectedRoute><Curve /></ProtectedRoute>} />
 
         {/* 结果查看子路由 */}
         <Route path="/result/allocation-balance" element={<ProtectedRoute><ResultAllocationBalance /></ProtectedRoute>} />

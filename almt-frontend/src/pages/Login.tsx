@@ -11,17 +11,19 @@ const Login = () => {
   const onFinish = async (values: { username: string; password: string }) => {
     setLoading(true)
     try {
-      const formData = new FormData()
-      formData.append('username', values.username)
-      formData.append('password', values.password)
-
-      const response = await apiClient.post('/auth/login', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
+      const response = await apiClient.post('/auth/login', {
+        username: values.username,
+        password: values.password
       })
 
-      localStorage.setItem('access_token', response.data.access_token)
-      message.success('登录成功')
-      navigate('/')
+      const token = response.data?.access_token || response.data?.token
+      if (token) {
+        localStorage.setItem('access_token', token)
+        message.success('登录成功')
+        navigate('/')
+      } else {
+        message.error('登录失败: 未获取到token')
+      }
     } catch (error: any) {
       message.error(error.response?.data?.detail || '登录失败')
     } finally {
@@ -71,6 +73,9 @@ const Login = () => {
             </Button>
           </Form.Item>
         </Form>
+        <div style={{ textAlign: 'center', color: '#999', fontSize: 13, marginTop: -8 }}>
+          默认账号：admin / admin123
+        </div>
       </Card>
     </div>
   )

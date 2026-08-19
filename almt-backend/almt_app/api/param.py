@@ -9,11 +9,8 @@ import uuid
 router = APIRouter(prefix="/api/param", tags=["参数配置"])
 
 
-def get_db_conn():
-    return pymysql.connect(
-        host='localhost', user='almt', password='almt',
-        database='almt_db', port=3306, cursorclass=pymysql.cursors.DictCursor
-    )
+# 统一使用 core.db_util，避免硬编码（云端与本地可通过 .env 切换账号）
+from almt_app.core.db_util import get_db_conn
 
 
 # ============ 利率情景假设 ============

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<title>ALMT 经营计划模拟系统 - 登录</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+    min-height: 100vh;
+    background:
+      radial-gradient(circle at 50% 0%, #e8f0ec 0%, transparent 60%),
+      radial-gradient(circle at 0% 100%, #d9e7e0 0%, transparent 50%),
+      radial-gradient(circle at 100% 100%, #c5d8cd 0%, transparent 50%),
+      linear-gradient(135deg, #eef4f0 0%, #d2dfd6 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+  /* 玉纹背景 */
+  body::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(60deg, transparent 0 60px, rgba(60, 110, 90, 0.04) 60px 61px),
+      repeating-linear-gradient(-60deg, transparent 0 60px, rgba(60, 110, 90, 0.04) 60px 61px);
+    pointer-events: none;
+  }
+  .card {
+    background: #fbfcf9;
+    width: 460px;
+    padding: 48px 56px 40px;
+    border-radius: 6px;
+    box-shadow:
+      0 1px 0 rgba(76, 130, 100, 0.4) inset,
+      0 0 0 1px rgba(76, 130, 100, 0.18),
+      0 24px 60px rgba(40, 80, 60, 0.15);
+    position: relative;
+    z-index: 1;
+  }
+  /* 双线边框 */
+  .card::before {
+    content: "";
+    position: absolute;
+    top: 12px; left: 12px; right: 12px; bottom: 12px;
+    border: 1px solid rgba(76, 130, 100, 0.3);
+    border-radius: 4px;
+    pointer-events: none;
+  }
+  .card::after {
+    content: "";
+    position: absolute;
+    top: 18px; left: 18px; right: 18px; bottom: 18px;
+    border: 1px dashed rgba(76, 130, 100, 0.2);
+    border-radius: 2px;
+    pointer-events: none;
+  }
+  .seal-frame { text-align: center; margin-bottom: 28px; }
+  .seal-frame img {
+    width: 96px;
+    height: 96px;
+    display: block;
+    margin: 0 auto 16px;
+    filter: drop-shadow(0 4px 12px rgba(76, 130, 100, 0.3));
+  }
+  .seal-frame h1 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #2c5b40;
+    letter-spacing: 4px;
+    margin-bottom: 4px;
+  }
+  .seal-frame .subtitle {
+    font-size: 11px;
+    color: #4c8264;
+    letter-spacing: 6px;
+    opacity: 0.7;
+  }
+  .divider {
+    display: flex;
+    align-items: center;
+    margin: 24px 0;
+    color: #4c8264;
+    font-size: 12px;
+    letter-spacing: 2px;
+  }
+  .divider::before, .divider::after {
+    content: "❀";
+    color: #7ba690;
+  }
+  .divider::before { margin-right: 12px; }
+  .divider::after { margin-left: 12px; }
+  .divider-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #a8c4b4, transparent);
+  }
+  .form-item { margin-bottom: 18px; }
+  .label {
+    display: block;
+    font-size: 12px;
+    color: #2c5b40;
+    margin-bottom: 6px;
+    letter-spacing: 2px;
+  }
+  .input-wrap { position: relative; }
+  .input-wrap input {
+    width: 100%;
+    padding: 12px 14px 12px 42px;
+    border: 1px solid #b8d1c1;
+    background: #f3f8f4;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #1f3f2c;
+    transition: all 0.2s;
+  }
+  .input-wrap input:focus {
+    outline: none;
+    border-color: #4c8264;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(76, 130, 100, 0.12);
+  }
+  .input-wrap .icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #4c8264;
+    font-size: 16px;
+  }
+  .btn {
+    width: 100%;
+    padding: 13px;
+    margin-top: 8px;
+    background: linear-gradient(135deg, #4c8264 0%, #2c5b40 100%);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    letter-spacing: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(76, 130, 100, 0.3);
+    transition: all 0.2s;
+  }
+  .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(76, 130, 100, 0.45);
+  }
+  .hint {
+    text-align: center;
+    margin-top: 18px;
+    font-size: 12px;
+    color: #4c8264;
+    opacity: 0.7;
+    letter-spacing: 1px;
+  }
+  .seal-tag {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #4c8264, #2c5b40);
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    box-shadow: 0 2px 8px rgba(76, 130, 100, 0.3);
+  }
+  .chop {
+    position: absolute;
+    bottom: -24px;
+    right: 36px;
+    width: 60px;
+    height: 60px;
+    border: 3px double #4c8264;
+    background: rgba(255, 255, 255, 0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: #2c5b40;
+    letter-spacing: 2px;
+    font-weight: 600;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(40, 80, 60, 0.2);
+    transform: rotate(4deg);
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="seal-tag">ALMT</div>
+    <div class="seal-frame">
+      <img src="/design/almt_icon.png" alt="ALMT Seal" />
+      <h1>经营计划模拟系统</h1>
+      <div class="subtitle">BUSINESS PLAN SIMULATION</div>
+    </div>
+    <div class="divider">
+      <span class="divider-line"></span>
+      &nbsp;&nbsp;账 户 登 录&nbsp;&nbsp;
+      <span class="divider-line"></span>
+    </div>
+    <div class="form-item">
+      <label class="label">用户名</label>
+      <div class="input-wrap">
+        <span class="icon">⌘</span>
+        <input type="text" placeholder="请输入用户名" value="admin" />
+      </div>
+    </div>
+    <div class="form-item">
+      <label class="label">密码</label>
+      <div class="input-wrap">
+        <span class="icon">⚷</span>
+        <input type="password" placeholder="请输入密码" value="admin123" />
+      </div>
+    </div>
+    <button class="btn" onclick="doLogin()">登 录</button>
+    <div class="hint">默认账号: admin / admin123</div>
+    <div id="msg" style="text-align:center;margin-top:12px;color:#b02a2a;font-size:12px;min-height:16px"></div>
+    <div class="chop">ALMT</div>
+  </div>
+
+<script>
+async function doLogin() {
+  const username = document.querySelector('input[placeholder*="用户"]').value;
+  const password = document.querySelector('input[type="password"]').value;
+  const msgEl = document.getElementById('msg');
+  const btn = document.querySelector('.btn');
+  if (!username || !password) { msgEl.textContent = '请输入用户名和密码'; return; }
+  btn.disabled = true; btn.textContent = '登录中...'; msgEl.textContent = '';
+  try {
+    const resp = await fetch('/almt/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    });
+    const data = await resp.json();
+    const token = data.data?.access_token || data.access_token;
+    if (resp.ok && token) {
+      localStorage.setItem('access_token', token);
+      msgEl.style.color = '#4c8264'; msgEl.textContent = '登录成功，正在跳转...';
+      setTimeout(() => { window.location.href = '/almt/'; }, 600);
+    } else {
+      msgEl.textContent = data.detail || data.message || '登录失败';
+      btn.disabled = false; btn.textContent = '登 录';
+    }
+  } catch (e) {
+    msgEl.textContent = '网络错误: ' + e.message;
+    btn.disabled = false; btn.textContent = '登 录';
+  }
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+</script>
+</body>
+</html>

@@ -23,7 +23,9 @@ from dataclasses import dataclass
 import pymysql
 import pandas as pd
 from decimal import Decimal
+import os
 from typing import Optional
+from urllib.parse import urlparse, unquote
 
 
 def _decimal_to_float(v):
@@ -35,16 +37,33 @@ def _decimal_to_float(v):
     return v
 
 
-# 数据库配置（与 almt_app/api/basic_param.py 保持一致）
-DB_CONFIG = {
-    'host': 'localhost',
-    'port': 3306,
-    'user': 'almt',
-    'password': 'almt',
-    'database': 'almt_db',
-    'charset': 'utf8mb4',
-    'cursorclass': pymysql.cursors.DictCursor
-}
+def _build_db_config():
+    """从环境变量构建数据库配置（支持本地 almt/almt 和云端 almd/Almd@2026）"""
+    db_url = os.environ.get('DATABASE_URL', '')
+    if db_url and db_url.startswith('mysql'):
+        parsed = urlparse(db_url.replace('mysql+pymysql://', 'mysql://'))
+        return {
+            'host': parsed.hostname or 'localhost',
+            'port': parsed.port or 3306,
+            'user': unquote(parsed.username or 'almt'),
+            'password': unquote(parsed.password or 'almt'),
+            'database': (parsed.path or '/almt_db').lstrip('/').split('?')[0],
+            'charset': 'utf8mb4',
+            'cursorclass': pymysql.cursors.DictCursor,
+        }
+    return {
+        'host': os.environ.get('MYSQL_HOST', 'localhost'),
+        'port': int(os.environ.get('MYSQL_PORT', 3306)),
+        'user': os.environ.get('MYSQL_USER', 'almt'),
+        'password': os.environ.get('MYSQL_PASSWORD', 'almt'),
+        'database': os.environ.get('MYSQL_DATABASE', 'almt_db'),
+        'charset': 'utf8mb4',
+        'cursorclass': pymysql.cursors.DictCursor,
+    }
+
+
+# 数据库配置（运行时按环境变量加载）
+DB_CONFIG = _build_db_config()
 
 
 @dataclass

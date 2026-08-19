@@ -101,10 +101,8 @@ def compute_basic_lookups(
             result[col] = 0.0
 
     # 3. 风险加权资产 = M0 余额 × M1 风险权重（无 M0 权重字段）
-    conn = pymysql.connect(
-        host='localhost', port=3306, user='almt', password='almt',
-        database='almt_db', charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor
-    )
+    from calculate_engine.core.loader import DB_CONFIG
+    conn = pymysql.connect(**DB_CONFIG)
     try:
         with conn.cursor() as cur:
             cur.execute('SELECT coa_cd, risk_weight_1 FROM almt_param_risk_weight')
