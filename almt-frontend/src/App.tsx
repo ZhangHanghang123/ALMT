@@ -46,7 +46,7 @@ import IndicatorFullBank from './pages/IndicatorFullBank'
 import IndicatorBizLine from './pages/IndicatorBizLine'
 import Curve from './pages/Curve'
 
-const { Header, Sider, Content } = Layout
+const { Header, Sider, Content, Footer } = Layout
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate()
@@ -148,6 +148,30 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
         <Content style={{ margin: 24, padding: 24, background: '#fff', minHeight: 280 }}>
           {children}
         </Content>
+
+        <Footer style={{
+          textAlign: 'center',
+          padding: '16px 24px',
+          background: 'transparent',
+          color: '#999',
+          fontSize: 12,
+          borderTop: '1px solid #f0f0f0',
+        }}>
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
+            <span>
+              <svg viewBox="0 0 16 16" width="12" height="12" style={{ verticalAlign: '-2px', marginRight: 4 }} fill="currentColor">
+                <path d="M8 1l6 2v4c0 4.418-2.866 8.418-6 9-3.134-.582-6-4.582-6-9V3l6-2zm0 2.236L4 4.618V7c0 3.314 2.068 6.34 4 7.022 1.932-.682 4-3.708 4-7.022V4.618L8 3.236zM7 9V7h2v2H7zm0 3v-1h2v1H7z"/>
+              </svg>
+              <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer" style={{ color: '#999' }}>
+                京ICP备2026054150号-1
+              </a>
+            </span>
+            <span style={{ color: '#ddd' }}>|</span>
+            <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer" style={{ color: '#999' }}>
+              京ICP备2026054150号
+            </a>
+          </div>
+        </Footer>
       </Layout>
     </Layout>
   )
