@@ -47,6 +47,7 @@
   .card.bank::before { background: linear-gradient(90deg, #1677ff, #52c41a); }
   .card.insurance::before { background: linear-gradient(90deg, #fa8c16, #ff4d4f); }
   .card.almt::before { background: linear-gradient(90deg, #722ed1, #eb2f96); }
+  .card.curv::before { background: linear-gradient(90deg, #b88633, #f0c674); }
   .card .icon {
     width: 56px; height: 56px; border-radius: 14px;
     display: flex; align-items: center; justify-content: center;
@@ -55,6 +56,7 @@
   .card.bank .icon { background: rgba(22,119,255,0.2); }
   .card.insurance .icon { background: rgba(250,140,22,0.2); }
   .card.almt .icon { background: rgba(114,46,209,0.2); }
+  .card.curv .icon { background: rgba(184,134,51,0.2); }
   .card h2 { font-size: 22px; font-weight: 700; margin-bottom: 10px; }
   .card .en { font-size: 12px; color: rgba(255,255,255,0.5); letter-spacing: 1px; margin-bottom: 14px; text-transform: uppercase; }
   .card p { font-size: 13px; color: rgba(255,255,255,0.75); line-height: 1.7; margin-bottom: 18px; }
@@ -111,21 +113,39 @@
     <a class="card almt" href="/almt/">
       <div class="icon">📊</div>
       <h2>经营计划模拟系统</h2>
-      <div class="en">ALMT · Asset Liability Management Tool</div>
-      <p>面向银行经营计划的模拟分析平台，由原 Excel/VBA 系统重构为 Web 架构，4 个计算引擎（业务分摊/定价策略/现金流/指标）覆盖 774 个账户册完整计算流程。</p>
+      <div class="en">ALMT · Asset Liability Management Trial</div>
+      <p>支持 FTP 定价、内部资金转移、利率风险测算、流动性指标监控、情景压力测试与监管报送的一体化经营计划模拟平台。</p>
       <div class="tags">
-        <span class="tag">业务分摊</span>
-        <span class="tag">定价策略</span>
-        <span class="tag">现金流计量</span>
-        <span class="tag">指标看板</span>
+        <span class="tag">FTP 定价</span>
+        <span class="tag">利率风险</span>
+        <span class="tag">情景模拟</span>
+        <span class="tag">监管报送</span>
+      </div>
+      <span class="enter">进入系统 <span class="arrow">→</span></span>
+    </a>
+
+    <a class="card curv" href="/curv/">
+      <div class="icon">📈</div>
+      <h2>曲线经营智能分析平台</h2>
+      <div class="en">CURV · Curve Yield &amp; Risk Platform</div>
+      <p>覆盖 25 条利率曲线（中债 / 互换 / 同业存单 / 6 大类外币曲线），支持收益率曲线建模、形态分析、利差监控与 AI 智能问数。</p>
+      <div class="tags">
+        <span class="tag">曲线建模</span>
+        <span class="tag">形态分析</span>
+        <span class="tag">利差监控</span>
+        <span class="tag">智能问数</span>
       </div>
       <span class="enter">进入系统 <span class="arrow">→</span></span>
     </a>
   </div>
 
-  <div class="footer">© 2026 金融经营智能分析平台 · ALMD & IALMD & ALMT</div>
-
-  <div class="footer">© 2026 金融经营智能分析平台 · ALMD & IALMD</div>
+  <div class="footer">
+    © 2026 金融经营智能分析平台 · ALMD · IALMD · ALMT · CURV
+    <br><br>
+    <a href="https://beian.miit.gov.cn/" target="_blank" style="color: rgba(255,255,255,0.6); text-decoration: none;">
+      京ICP备2026054150号
+    </a>
+  </div>
 </div>
 </body>
 </html>
