@@ -149,7 +149,6 @@ const CalculatePage = () => {
       title: '计算版本', dataIndex: 'calc_version', key: 'calc_version', width: 140,
       render: (v: string) => <Tag color="blue" style={{ fontFamily: 'monospace' }}>{v}</Tag>
     },
-    { title: '任务ID', dataIndex: 'task_id', key: 'task_id', width: 220, ellipsis: true },
     {
       title: '数据日期', dataIndex: 'data_date', key: 'data_date', width: 110,
       render: (d: string) => d ? new Date(d).toLocaleDateString('zh-CN') : '-'
@@ -393,7 +392,6 @@ const CalculatePage = () => {
         {detailVersion && (
           <Space direction="vertical" size="small" style={{ width: '100%' }}>
             <div><b>计算版本：</b><Tag color="blue">{detailVersion.calc_version}</Tag></div>
-            <div><b>任务ID：</b><code>{detailVersion.task_id}</code></div>
             <div><b>数据日期：</b>{detailVersion.data_date ? new Date(detailVersion.data_date).toLocaleDateString('zh-CN') : '-'}</div>
             <div><b>状态：</b><Tag color={detailVersion.status === 'success' ? 'green' : 'orange'}>{detailVersion.status}</Tag></div>
             <div><b>进度：</b>{detailVersion.progress}%</div>

@@ -27,22 +27,27 @@ def _to_yyyymmdd(d) -> str:
 
 
 def _db_conn():
+    """获取数据库连接（使用settings配置）"""
     from almt_app.core.config import settings
-    # 使用环境变量中的数据库配置
-    import os
-    db_url = os.environ.get('DATABASE_URL_OVERRIDE') or os.environ.get('DATABASE_URL')
-    if db_url and 'mysql' in db_url:
-        # 解析 mysql+pymysql://user:pass@host:port/db
-        import re
-        m = re.match(r'mysql\+pymysql://(\w+):(.+)@([^:]+):(\d+)/(\w+)', db_url)
-        if m:
-            import urllib.parse
-            password = urllib.parse.unquote(m.group(2))
-            return pymysql.connect(
-                host=m.group(3), user=m.group(1), password=password,
-                database=m.group(5), port=int(m.group(4)), cursorclass=pymysql.cursors.DictCursor
-            )
-    # 默认配置
+    from urllib.parse import urlparse, unquote
+
+    # 优先使用 DATABASE_URL_OVERRIDE
+    override = settings.DATABASE_URL_OVERRIDE
+    if override:
+        # 解析 mysql+pymysql://user:pass@host:port/db?charset=utf8mb4
+        url = override.replace('mysql+pymysql://', 'mysql://')
+        parsed = urlparse(url)
+        return pymysql.connect(
+            host=parsed.hostname or '127.0.0.1',
+            port=parsed.port or 3306,
+            user=unquote(parsed.username or 'almd'),
+            password=unquote(parsed.password or ''),
+            database=(parsed.path or '/almt_db').lstrip('/').split('?')[0],
+            charset='utf8mb4',
+            cursorclass=pymysql.cursors.DictCursor
+        )
+
+    # 回退到默认配置
     return pymysql.connect(
         host='127.0.0.1', user='almd', password='Almd@2026',
         database='almt_db', port=3306, cursorclass=pymysql.cursors.DictCursor

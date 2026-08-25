@@ -23,15 +23,35 @@ import pymysql
 from calculate_engine.runner import CalcResult
 
 
-DB_CONFIG = {
-    'host': 'localhost',
-    'port': 3306,
-    'user': 'almt',
-    'password': 'almt',
-    'database': 'almt_db',
-    'charset': 'utf8mb4',
-    'cursorclass': pymysql.cursors.DictCursor,
-}
+def _build_db_config():
+    """从环境变量构建数据库配置"""
+    import os
+    from urllib.parse import urlparse, unquote
+
+    db_url = os.environ.get('DATABASE_URL_OVERRIDE', '') or os.environ.get('DATABASE_URL', '')
+    if db_url and 'mysql' in db_url:
+        parsed = urlparse(db_url.replace('mysql+pymysql://', 'mysql://'))
+        return {
+            'host': parsed.hostname or '127.0.0.1',
+            'port': parsed.port or 3306,
+            'user': unquote(parsed.username or 'almd'),
+            'password': unquote(parsed.password or ''),
+            'database': (parsed.path or '/almt_db').lstrip('/').split('?')[0],
+            'charset': 'utf8mb4',
+            'cursorclass': pymysql.cursors.DictCursor,
+        }
+    return {
+        'host': '127.0.0.1',
+        'port': 3306,
+        'user': 'almd',
+        'password': 'Almd@2026',
+        'database': 'almt_db',
+        'charset': 'utf8mb4',
+        'cursorclass': pymysql.cursors.DictCursor,
+    }
+
+
+DB_CONFIG = _build_db_config()
 
 
 # 23 组指标的名称（与指标编号对应）

@@ -39,23 +39,24 @@ def _decimal_to_float(v):
 
 def _build_db_config():
     """从环境变量构建数据库配置（支持本地 almt/almt 和云端 almd/Almd@2026）"""
-    db_url = os.environ.get('DATABASE_URL', '')
-    if db_url and db_url.startswith('mysql'):
+    # 优先使用 DATABASE_URL_OVERRIDE
+    db_url = os.environ.get('DATABASE_URL_OVERRIDE', '') or os.environ.get('DATABASE_URL', '')
+    if db_url and 'mysql' in db_url:
         parsed = urlparse(db_url.replace('mysql+pymysql://', 'mysql://'))
         return {
-            'host': parsed.hostname or 'localhost',
+            'host': parsed.hostname or '127.0.0.1',
             'port': parsed.port or 3306,
-            'user': unquote(parsed.username or 'almt'),
-            'password': unquote(parsed.password or 'almt'),
+            'user': unquote(parsed.username or 'almd'),
+            'password': unquote(parsed.password or ''),
             'database': (parsed.path or '/almt_db').lstrip('/').split('?')[0],
             'charset': 'utf8mb4',
             'cursorclass': pymysql.cursors.DictCursor,
         }
     return {
-        'host': os.environ.get('MYSQL_HOST', 'localhost'),
+        'host': os.environ.get('MYSQL_HOST', '127.0.0.1'),
         'port': int(os.environ.get('MYSQL_PORT', 3306)),
-        'user': os.environ.get('MYSQL_USER', 'almt'),
-        'password': os.environ.get('MYSQL_PASSWORD', 'almt'),
+        'user': os.environ.get('MYSQL_USER', 'almd'),
+        'password': os.environ.get('MYSQL_PASSWORD', 'Almd@2026'),
         'database': os.environ.get('MYSQL_DATABASE', 'almt_db'),
         'charset': 'utf8mb4',
         'cursorclass': pymysql.cursors.DictCursor,
