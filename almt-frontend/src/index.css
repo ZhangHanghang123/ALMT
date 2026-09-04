@@ -1,0 +1,182 @@
+/* ============================================================
+   ALMT 经营计划模拟系统 — 蓝紫渐变主题
+   与 ALMD/IALMD/ALMT/CURV/IALM 5 模块统一风格：
+   主色 #667eea（蓝紫） → #764ba2（深紫）
+   ============================================================ */
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+
+/* ---------- 顶部 Header（经营计划模拟系统）---------- */
+.app-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  padding: 0 24px !important;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+.app-header h2,
+.app-header .app-header-title {
+  margin: 0;
+  color: white !important;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+.app-header .header-right {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.app-header .header-right a,
+.app-header .header-right button {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* ---------- 左侧 Sider 顶部 logo（"经营计划"）---------- */
+.app-sider-logo {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* ---------- 菜单选中色（覆盖 AntD 默认 #1890ff）---------- */
+.ant-menu-light.ant-menu-root.ant-menu-inline {
+  border-inline-end: none !important;
+}
+.ant-menu-light .ant-menu-item-selected {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.12) 0%, rgba(118, 75, 162, 0.12) 100%) !important;
+  color: #667eea !important;
+}
+.ant-menu-light .ant-menu-item-selected::after {
+  border-bottom-color: #667eea !important;
+}
+.ant-menu-light .ant-menu-item:hover:not(.ant-menu-item-selected) {
+  color: #764ba2 !important;
+}
+.ant-menu-light .ant-menu-submenu-selected > .ant-menu-submenu-title {
+  color: #667eea !important;
+}
+
+/* ---------- 页面通用 ---------- */
+.app-content {
+  background: #f0f2f5;
+  padding: 24px;
+  margin: 0 !important;
+}
+.page-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 16px;
+  color: #1a1a2e;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.page-title-icon {
+  width: 4px;
+  height: 20px;
+  background: linear-gradient(180deg, #667eea, #764ba2);
+  border-radius: 2px;
+}
+
+/* ---------- 卡片 hover ---------- */
+.kpi-card {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+}
+.kpi-card:hover {
+  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.18);
+  transform: translateY(-2px);
+}
+
+/* ---------- 登录页 ---------- */
+.login-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.login-card {
+  width: 420px;
+  padding: 40px 36px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+}
+.login-logo {
+  text-align: center;
+  margin-bottom: 28px;
+}
+.login-logo-icon {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 12px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 36px;
+  font-weight: 700;
+}
+.login-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+.login-subtitle {
+  font-size: 13px;
+  color: #8c8c8c;
+  margin-top: 4px;
+}
+.login-btn-gradient {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  border: none !important;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.35);
+}
+.login-btn-gradient:hover {
+  background: linear-gradient(135deg, #5a6fd8 0%, #6a4391 100%) !important;
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.5);
+}
+
+/* ---------- AntD 主题色覆盖（让 Button type="primary" 也带渐变）---------- */
+.ant-btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  border-color: transparent !important;
+}
+.ant-btn-primary:hover,
+.ant-btn-primary:focus {
+  background: linear-gradient(135deg, #5a6fd8 0%, #6a4391 100%) !important;
+  border-color: transparent !important;
+}
+
+/* ---------- Footer ---------- */
+.app-footer {
+  text-align: center;
+  padding: 16px 24px;
+  background: transparent;
+  color: #999;
+  font-size: 12px;
+  border-top: 1px solid #f0f0f0;
+}
+.app-footer a {
+  color: #999;
+}

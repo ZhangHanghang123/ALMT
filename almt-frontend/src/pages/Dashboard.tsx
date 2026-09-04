@@ -41,11 +41,14 @@ const Dashboard = () => {
 
   return (
     <div>
-      <h1 style={{ marginBottom: 24 }}>欢迎使用经营计划模拟系统</h1>
+      <div className="page-title">
+        <span className="page-title-icon" />
+        欢迎使用经营计划模拟系统
+      </div>
 
       <Row gutter={[16, 16]}>
         <Col xs={24} sm={12} lg={6}>
-          <Card>
+          <Card className="kpi-card">
             <Statistic
               title="账户册数量"
               value={stats.coaCount}
@@ -54,7 +57,7 @@ const Dashboard = () => {
           </Card>
         </Col>
         <Col xs={24} sm={12} lg={6}>
-          <Card>
+          <Card className="kpi-card">
             <Statistic
               title="参数配置"
               value={stats.paramCount}
@@ -63,7 +66,7 @@ const Dashboard = () => {
           </Card>
         </Col>
         <Col xs={24} sm={12} lg={6}>
-          <Card>
+          <Card className="kpi-card">
             <Statistic
               title="计算任务"
               value={stats.taskCount}
@@ -72,7 +75,7 @@ const Dashboard = () => {
           </Card>
         </Col>
         <Col xs={24} sm={12} lg={6}>
-          <Card>
+          <Card className="kpi-card">
             <Statistic
               title="数据指标"
               value={0}

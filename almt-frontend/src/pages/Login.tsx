@@ -32,14 +32,13 @@ const Login = () => {
   }
 
   return (
-    <div style={{
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      minHeight: '100vh',
-      background: '#f0f2f5'
-    }}>
-      <Card title="经营计划模拟系统" style={{ width: 400 }}>
+    <div className="login-page">
+      <div className="login-card">
+        <div className="login-logo">
+          <div className="login-logo-icon">衡</div>
+          <div className="login-title">经营计划模拟系统</div>
+          <div className="login-subtitle">ALMT · Asset-Liability Management &amp; Planning</div>
+        </div>
         <Form
           name="login"
           onFinish={onFinish}
@@ -68,7 +67,7 @@ const Login = () => {
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit" loading={loading} block size="large">
+            <Button type="primary" className="login-btn-gradient" htmlType="submit" loading={loading} block size="large">
               登录
             </Button>
           </Form.Item>
@@ -76,7 +75,7 @@ const Login = () => {
         <div style={{ textAlign: 'center', color: '#999', fontSize: 13, marginTop: -8 }}>
           默认账号：admin / admin123
         </div>
-      </Card>
+      </div>
     </div>
   )
 }

@@ -117,8 +117,8 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sider theme="light" breakpoint="lg" collapsedWidth="0" width={220}>
-        <div style={{ height: 64, display: 'flex', alignItems: 'center', justifyContent: 'center', borderBottom: '1px solid #f0f0f0' }}>
-          <h2 style={{ margin: 0, color: '#1890ff' }}>经营计划</h2>
+        <div className="app-sider-logo">
+          经营计划
         </div>
         <Menu
           mode="inline"
@@ -142,32 +142,25 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
         </div>
       </Sider>
       <Layout>
-        <Header style={{ background: '#fff', padding: '0 24px', borderBottom: '1px solid #f0f0f0' }}>
-          <h2 style={{ margin: 0 }}>经营计划模拟系统</h2>
+        <Header className="app-header">
+          <h2>经营计划模拟系统</h2>
         </Header>
-        <Content style={{ margin: 24, padding: 24, background: '#fff', minHeight: 280 }}>
+        <Content className="app-content" style={{ minHeight: 280 }}>
           {children}
         </Content>
 
-        <Footer style={{
-          textAlign: 'center',
-          padding: '16px 24px',
-          background: 'transparent',
-          color: '#999',
-          fontSize: 12,
-          borderTop: '1px solid #f0f0f0',
-        }}>
+        <Footer className="app-footer">
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
             <span>
               <svg viewBox="0 0 16 16" width="12" height="12" style={{ verticalAlign: '-2px', marginRight: 4 }} fill="currentColor">
                 <path d="M8 1l6 2v4c0 4.418-2.866 8.418-6 9-3.134-.582-6-4.582-6-9V3l6-2zm0 2.236L4 4.618V7c0 3.314 2.068 6.34 4 7.022 1.932-.682 4-3.708 4-7.022V4.618L8 3.236zM7 9V7h2v2H7zm0 3v-1h2v1H7z"/>
               </svg>
-              <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer" style={{ color: '#999' }}>
+              <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">
                 京ICP备2026054150号-1
               </a>
             </span>
             <span style={{ color: '#ddd' }}>|</span>
-            <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer" style={{ color: '#999' }}>
+            <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">
               京ICP备2026054150号
             </a>
           </div>
