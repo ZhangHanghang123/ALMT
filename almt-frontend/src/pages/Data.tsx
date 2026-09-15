@@ -13,6 +13,7 @@ interface TreeNode {
   balance: number | null
   average_balance: number | null
   rate: number | null
+  rate_pct: number | null
   has_data: boolean
   children?: TreeNode[]
 }
@@ -69,6 +70,7 @@ const DataPage = () => {
       balance: n.balance,
       average_balance: n.average_balance,
       rate: n.rate,
+      rate_pct: n.rate_pct,
       has_data: n.has_data,
       children: n.children ? convertKeys(n.children) : []
     }))
@@ -112,7 +114,8 @@ const DataPage = () => {
       coa_name: record.coa_name,
       balance: record.balance,
       average_balance: record.average_balance,
-      rate: record.rate
+      rate: record.rate,
+      rate_pct: record.rate_pct
     })
     setModalVisible(true)
   }
@@ -239,15 +242,20 @@ const DataPage = () => {
     },
     {
       title: '利率',
-      dataIndex: 'rate',
-      key: 'rate',
-      width: 120,
+      dataIndex: 'rate_pct',
+      key: 'rate_pct',
+      width: 100,
       align: 'right' as const,
       render: (val: number | null, record: TreeNode) => {
-        if (!record.has_data || val === null) return <span style={{ color: '#bbb' }}>-</span>
-        // 值<1 当作小数百分比，>1 当作绝对值显示
-        if (val > 0 && val < 1) return (Number(val) * 100).toFixed(2) + '%'
-        return val.toFixed(2)
+        if (!record.has_data) return <span style={{ color: '#bbb' }}>-</span>
+        // 优先使用 rate_pct（年化利率小数）；缺失时按 (rate×12/avg)×100% 推算
+        let pct = val
+        if (pct === null && record.rate !== null && record.average_balance && record.average_balance > 0) {
+          pct = (record.rate * 12) / record.average_balance
+        }
+        if (pct === null || pct === undefined) return <span style={{ color: '#bbb' }}>-</span>
+        const sign = pct < 0 ? '-' : ''
+        return <span>{sign}{Math.abs(Number(pct) * 100).toFixed(2)}%</span>
       }
     },
     {
@@ -342,8 +350,11 @@ const DataPage = () => {
           <Form.Item name="average_balance" label="日均余额">
             <InputNumber style={{ width: '100%' }} />
           </Form.Item>
-          <Form.Item name="rate" label="利率">
-            <InputNumber style={{ width: '100%' }} step={0.0001} min={0} max={1} />
+          <Form.Item name="rate" label="月度利息金额（元/月）" tooltip="用于计算引擎 NII（不要直接编辑月度利息金额，请编辑下方年化利率）">
+            <InputNumber style={{ width: '100%' }} />
+          </Form.Item>
+          <Form.Item name="rate_pct" label="年化利率（%）" tooltip="推荐编辑此项，值 0.0156 表示 1.56%">
+            <InputNumber style={{ width: '100%' }} step={0.0001} />
           </Form.Item>
         </Form>
       </Modal>

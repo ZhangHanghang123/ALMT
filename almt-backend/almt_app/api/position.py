@@ -19,10 +19,10 @@ def get_position_list(skip: int = 0, limit: int = 20, search: str = ''):
     try:
         with conn.cursor() as cursor:
             if search:
-                sql = f"SELECT id, uuid, coa_lvl, coa_name, balance, average_balance, rate FROM almt_current_position WHERE coa_lvl LIKE %s OR coa_name LIKE %s LIMIT {limit} OFFSET {skip}"
+                sql = f"SELECT id, uuid, coa_lvl, coa_name, balance, average_balance, rate, rate_pct FROM almt_current_position WHERE coa_lvl LIKE %s OR coa_name LIKE %s LIMIT {limit} OFFSET {skip}"
                 cursor.execute(sql, (f'%{search}%', f'%{search}%'))
             else:
-                sql = f"SELECT id, uuid, coa_lvl, coa_name, balance, average_balance, rate FROM almt_current_position LIMIT {limit} OFFSET {skip}"
+                sql = f"SELECT id, uuid, coa_lvl, coa_name, balance, average_balance, rate, rate_pct FROM almt_current_position LIMIT {limit} OFFSET {skip}"
                 cursor.execute(sql)
             return cursor.fetchall()
     finally:
@@ -55,11 +55,13 @@ def create_position(item: dict):
     try:
         with conn.cursor() as cursor:
             uuid_val = item.get('uuid') or str(uuid.uuid4())
+            rate_pct_val = item.get('rate_pct')
+            rate_pct_val = float(rate_pct_val) if rate_pct_val not in (None, '') else None
             cursor.execute(
-                """INSERT INTO almt_current_position (uuid, coa_lvl, coa_name, balance, average_balance, rate) 
-                VALUES (%s, %s, %s, %s, %s, %s)""",
+                """INSERT INTO almt_current_position (uuid, coa_lvl, coa_name, balance, average_balance, rate, rate_pct)
+                VALUES (%s, %s, %s, %s, %s, %s, %s)""",
                 (uuid_val, item.get('coa_lvl', ''), item.get('coa_name', ''),
-                 item.get('balance', 0), item.get('average_balance', 0), item.get('rate', 0))
+                 item.get('balance', 0), item.get('average_balance', 0), item.get('rate', 0), rate_pct_val)
             )
         conn.commit()
         return {"message": "创建成功", "uuid": uuid_val}
@@ -73,13 +75,15 @@ def update_position(position_id: int, item: dict):
     conn = get_db_conn()
     try:
         with conn.cursor() as cursor:
+            rate_pct_val = item.get('rate_pct')
+            rate_pct_val = float(rate_pct_val) if rate_pct_val not in (None, '') else None
             cursor.execute(
-                """UPDATE almt_current_position 
-                SET coa_lvl=%s, coa_name=%s, balance=%s, average_balance=%s, rate=%s 
+                """UPDATE almt_current_position
+                SET coa_lvl=%s, coa_name=%s, balance=%s, average_balance=%s, rate=%s, rate_pct=%s
                 WHERE id=%s""",
                 (item.get('coa_lvl', ''), item.get('coa_name', ''),
                  item.get('balance', 0), item.get('average_balance', 0), item.get('rate', 0),
-                 position_id)
+                 rate_pct_val, position_id)
             )
         conn.commit()
         return {"message": "更新成功"}
@@ -113,7 +117,7 @@ def get_position_tree():
             # 获取所有存量数据（按 coa_lvl 聚合）
             cursor.execute("""
                 SELECT coa_lvl, SUM(balance) as balance, SUM(average_balance) as average_balance,
-                       AVG(rate) as rate, COUNT(*) as cnt
+                       AVG(rate) as rate, AVG(rate_pct) as rate_pct, COUNT(*) as cnt
                 FROM almt_current_position
                 GROUP BY coa_lvl
             """)
@@ -134,6 +138,7 @@ def get_position_tree():
                 "balance": None,
                 "average_balance": None,
                 "rate": None,
+                "rate_pct": None,
                 "has_data": False,
                 "children": []
             }
@@ -145,6 +150,7 @@ def get_position_tree():
                 node['balance'] = float(pos['balance'] or 0)
                 node['average_balance'] = float(pos['average_balance'] or 0)
                 node['rate'] = float(pos['rate'] or 0)
+                node['rate_pct'] = float(pos['rate_pct']) if pos['rate_pct'] is not None else None
                 node['has_data'] = True
 
         # 使用 parent_coa_cd 构建父子关系
@@ -178,6 +184,8 @@ def get_position_tree():
                 node['balance'] = total_bal
                 node['average_balance'] = total_avg
                 node['has_data'] = True
+            # 父节点（非叶）不显示聚合利率（rate_pct 语义仅适用于叶节点）
+            node['rate_pct'] = None
 
         for root in roots:
             calc_sum(root)
@@ -222,7 +230,7 @@ def export_position():
 
 @router.post("/import")
 async def import_position(file):
-    """从Excel导入存量数据"""
+    """从Excel导入存量数据（向后兼容：可选第 6 列 rate_pct 年化利率%）"""
     from openpyxl import load_workbook
     import io
 
@@ -239,21 +247,25 @@ async def import_position(file):
             for row in rows:
                 if not row or not row[0]:
                     continue
-                coa_lvl, coa_name, balance, avg_balance, rate = (list(row) + [None]*5)[:5]
+                # 兼容老格式：仅 5 列时 rate_pct=None；新格式 6 列时第 6 列是 rate_pct
+                fields = list(row) + [None] * 6
+                coa_lvl, coa_name, balance, avg_balance, rate, rate_pct = fields[:6]
+                rate_pct_val = float(rate_pct) if rate_pct not in (None, '') else None
                 cursor.execute("SELECT id FROM almt_current_position WHERE coa_lvl=%s", (str(coa_lvl),))
                 existing = cursor.fetchone()
                 if existing:
                     cursor.execute(
-                        """UPDATE almt_current_position SET coa_name=%s, balance=%s, average_balance=%s, rate=%s WHERE id=%s""",
-                        (str(coa_name or ''), float(balance or 0), float(avg_balance or 0), float(rate or 0), existing['id'])
+                        """UPDATE almt_current_position SET coa_name=%s, balance=%s, average_balance=%s, rate=%s, rate_pct=%s WHERE id=%s""",
+                        (str(coa_name or ''), float(balance or 0), float(avg_balance or 0),
+                         float(rate or 0), rate_pct_val, existing['id'])
                     )
                     updated += 1
                 else:
                     cursor.execute(
-                        """INSERT INTO almt_current_position (uuid, coa_lvl, coa_name, balance, average_balance, rate) 
-                        VALUES (%s, %s, %s, %s, %s, %s)""",
+                        """INSERT INTO almt_current_position (uuid, coa_lvl, coa_name, balance, average_balance, rate, rate_pct)
+                        VALUES (%s, %s, %s, %s, %s, %s, %s)""",
                         (str(uuid.uuid4()), str(coa_lvl), str(coa_name or ''),
-                         float(balance or 0), float(avg_balance or 0), float(rate or 0))
+                         float(balance or 0), float(avg_balance or 0), float(rate or 0), rate_pct_val)
                     )
                     inserted += 1
         conn.commit()
