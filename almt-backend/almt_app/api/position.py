@@ -184,8 +184,8 @@ def get_position_tree():
                 node['balance'] = total_bal
                 node['average_balance'] = total_avg
                 node['has_data'] = True
-            # 父节点（非叶）不显示聚合利率（rate_pct 语义仅适用于叶节点）
-            node['rate_pct'] = None
+            # 父节点的 rate_pct 已在数据库中按子账户加权计算（gen_parent_rates.py），
+            # 此处不再覆盖，保持数据库原值
 
         for root in roots:
             calc_sum(root)
